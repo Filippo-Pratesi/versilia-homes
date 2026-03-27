@@ -1,0 +1,55 @@
+{
+  "nav": {
+    "home": "Home",
+    "apartments": "Apartments",
+    "aboutUs": "About Us"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "directBooking": "Direct booking — no commission"
+  },
+  "common": {
+    "guests": "guests",
+    "bedrooms": "bedrooms",
+    "beds": "beds",
+    "bathrooms": "bathrooms",
+    "perNight": "per night",
+    "from": "from",
+    "bookNow": "Book now",
+    "sendRequest": "Send request",
+    "loading": "Loading..."
+  },
+  "home": {
+    "heroTitle": "Holidays in Versilia",
+    "heroSubtitle": "Apartments in Viareggio, steps from the sea",
+    "heroCta": "Discover our apartments",
+    "whyDirectTitle": "Why book directly?",
+    "whyDirect1Title": "No commission",
+    "whyDirect1Desc": "Save up to 15% compared to online platforms",
+    "whyDirect2Title": "Direct contact",
+    "whyDirect2Desc": "Talk directly with the owner via WhatsApp or email",
+    "whyDirect3Title": "Maximum flexibility",
+    "whyDirect3Desc": "Custom solutions for your needs"
+  },
+  "booking": {
+    "title": "Request booking",
+    "name": "Full name",
+    "email": "Email",
+    "phone": "Phone",
+    "guests": "Number of guests",
+    "message": "Message (optional)",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "estimatedPrice": "Estimated price",
+    "nights": "nights",
+    "total": "Total",
+    "submit": "Send request",
+    "success": "Request sent!",
+    "successDesc": "We'll get back to you within 24 hours. You can also contact us on WhatsApp.",
+    "whatsapp": "Contact on WhatsApp"
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Our family and the Versilia"
+  }
+}

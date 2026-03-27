@@ -1,0 +1,55 @@
+{
+  "nav": {
+    "home": "Home",
+    "apartments": "Appartamenti",
+    "aboutUs": "Chi Siamo"
+  },
+  "footer": {
+    "rights": "Tutti i diritti riservati",
+    "directBooking": "Prenotazione diretta — nessuna commissione"
+  },
+  "common": {
+    "guests": "ospiti",
+    "bedrooms": "camere",
+    "beds": "letti",
+    "bathrooms": "bagni",
+    "perNight": "a notte",
+    "from": "da",
+    "bookNow": "Prenota ora",
+    "sendRequest": "Invia richiesta",
+    "loading": "Caricamento..."
+  },
+  "home": {
+    "heroTitle": "Vacanze in Versilia",
+    "heroSubtitle": "Appartamenti a Viareggio, a pochi passi dal mare",
+    "heroCta": "Scopri i nostri appartamenti",
+    "whyDirectTitle": "Perché prenotare direttamente?",
+    "whyDirect1Title": "Nessuna commissione",
+    "whyDirect1Desc": "Risparmia fino al 15% rispetto alle piattaforme online",
+    "whyDirect2Title": "Contatto diretto",
+    "whyDirect2Desc": "Parla direttamente con il proprietario via WhatsApp o email",
+    "whyDirect3Title": "Massima flessibilità",
+    "whyDirect3Desc": "Soluzioni personalizzate per le tue esigenze"
+  },
+  "booking": {
+    "title": "Richiedi prenotazione",
+    "name": "Nome completo",
+    "email": "Email",
+    "phone": "Telefono",
+    "guests": "Numero ospiti",
+    "message": "Messaggio (opzionale)",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "estimatedPrice": "Prezzo stimato",
+    "nights": "notti",
+    "total": "Totale",
+    "submit": "Invia richiesta",
+    "success": "Richiesta inviata!",
+    "successDesc": "Ti risponderemo entro 24 ore. Puoi anche contattarci su WhatsApp.",
+    "whatsapp": "Contatta su WhatsApp"
+  },
+  "about": {
+    "title": "Chi Siamo",
+    "subtitle": "La nostra famiglia e la Versilia"
+  }
+}
