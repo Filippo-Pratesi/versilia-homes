@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Home, MessageSquare, CalendarCheck, RefreshCw } from "lucide-react";
+import { SyncButton } from "@/components/admin/sync-button";
 
 type LastSync = {
   propertyId: string;
@@ -218,14 +219,9 @@ export default async function AdminDashboard() {
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle className="text-lg font-semibold text-[#2D3436] flex items-center gap-2">
               <RefreshCw className="w-5 h-5 text-[#4A90A4]" />
-              Stato Sincronizzazione Airbnb
+              Sincronizzazione Calendari Airbnb
             </CardTitle>
-            <Link
-              href="/admin/properties"
-              className="text-sm text-[#4A90A4] hover:underline"
-            >
-              Gestisci proprietà
-            </Link>
+            <SyncButton />
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
