@@ -2,11 +2,14 @@
   "nav": {
     "home": "Home",
     "apartments": "Appartamenti",
-    "aboutUs": "Chi Siamo"
+    "aboutUs": "Chi Siamo",
+    "bookNow": "Prenota ora"
   },
   "footer": {
     "rights": "Tutti i diritti riservati",
-    "directBooking": "Prenotazione diretta — nessuna commissione"
+    "directBooking": "Prenotazione diretta — nessuna commissione",
+    "tagline": "Appartamenti vacanza a Viareggio, Versilia.",
+    "legal": "Struttura registrata ai sensi della normativa regionale sulla registrazione turistica."
   },
   "common": {
     "guests": "ospiti",
@@ -19,17 +22,36 @@
     "sendRequest": "Invia richiesta",
     "loading": "Caricamento..."
   },
+  "hero": {
+    "eyebrow": "Viareggio · Versilia",
+    "words": ["Appartamenti", "Vacanza", "a", "Viareggio"],
+    "subtitle": "A pochi passi dal mare della Versilia. Prenota direttamente, senza intermediari.",
+    "ctaExplore": "Scopri gli appartamenti",
+    "ctaContact": "Contattaci",
+    "scrollLabel": "Scorri"
+  },
   "home": {
     "heroTitle": "Vacanze in Versilia",
     "heroSubtitle": "Appartamenti a Viareggio, a pochi passi dal mare",
     "heroCta": "Scopri i nostri appartamenti",
     "whyDirectTitle": "Perché prenotare direttamente?",
-    "whyDirect1Title": "Nessuna commissione",
-    "whyDirect1Desc": "Risparmia fino al 15% rispetto alle piattaforme online",
-    "whyDirect2Title": "Contatto diretto",
-    "whyDirect2Desc": "Parla direttamente con il proprietario via WhatsApp o email",
+    "whyDirect1Title": "Risparmia le commissioni",
+    "whyDirect1Desc": "Airbnb prende fino al 20%. Qui paghi solo l'affitto.",
+    "whyDirect2Title": "Contatto diretto con i proprietari",
+    "whyDirect2Desc": "Risposte rapide via WhatsApp e email.",
     "whyDirect3Title": "Massima flessibilità",
-    "whyDirect3Desc": "Soluzioni personalizzate per le tue esigenze"
+    "whyDirect3Desc": "Accordi personalizzati su orari, animali, esigenze speciali."
+  },
+  "propertyCard": {
+    "fromPrice": "a partire da",
+    "perNight": "/ notte",
+    "guests": "ospiti",
+    "bedrooms": "camere",
+    "beds": "letti",
+    "bathrooms": "bagni",
+    "rating": "Valutazione",
+    "guestFavorite": "Guest Favorite",
+    "contactForPrice": "Contattaci per il prezzo"
   },
   "booking": {
     "title": "Richiedi prenotazione",
@@ -40,13 +62,22 @@
     "message": "Messaggio (opzionale)",
     "checkIn": "Check-in",
     "checkOut": "Check-out",
+    "selectDates": "Seleziona le date",
     "estimatedPrice": "Prezzo stimato",
     "nights": "notti",
     "total": "Totale",
     "submit": "Invia richiesta",
+    "submitting": "Invio in corso...",
     "success": "Richiesta inviata!",
-    "successDesc": "Ti risponderemo entro 24 ore. Puoi anche contattarci su WhatsApp.",
-    "whatsapp": "Contatta su WhatsApp"
+    "successDesc": "Ti contatteremo entro 24 ore per confermare la disponibilità.",
+    "whatsapp": "Contatta su WhatsApp",
+    "newRequest": "Nuova richiesta",
+    "noPaymentRequired": "Nessun pagamento richiesto ora."
+  },
+  "calendar": {
+    "minNightsWarning": "Soggiorno minimo: {nights} notti. Seleziona un periodo più lungo.",
+    "selectCheckout": "Seleziona la data di check-out",
+    "blockedDates": "Date non disponibili"
   },
   "about": {
     "title": "Chi Siamo",

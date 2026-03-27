@@ -111,3 +111,74 @@
     @apply font-sans;
   }
 }
+
+/* ===================== */
+/* Public site styles    */
+/* ===================== */
+
+/* Hero background: soft Mediterranean gradient + subtle texture */
+.public-hero-bg {
+  background: linear-gradient(
+    160deg,
+    #FAFAF8 0%,
+    #EEE8DC 40%,
+    #E0EFF3 100%
+  );
+  position: relative;
+}
+.public-hero-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234A90A4' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* Scroll-based fade-in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Property card hover */
+.property-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.property-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Scroll snap for mobile gallery */
+.gallery-scroll {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.gallery-scroll > * {
+  scroll-snap-align: start;
+}
+
+/* DayPicker public calendar overrides */
+.rdp-public .rdp-day_selected {
+  background-color: #4A90A4 !important;
+  color: #FAFAF8 !important;
+}
+.rdp-public .rdp-day_range_middle {
+  background-color: rgba(74, 144, 164, 0.15) !important;
+  color: #2D3436 !important;
+}
+.rdp-public .rdp-day_disabled {
+  color: #C2714F !important;
+  text-decoration: line-through;
+  opacity: 0.6;
+}

@@ -2,37 +2,79 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { Home, MessageSquare, CalendarCheck } from "lucide-react";
+import { Home, MessageSquare, CalendarCheck, RefreshCw } from "lucide-react";
+
+type LastSync = {
+  propertyId: string;
+  title: string;
+  syncedAt: string | null;
+  airbnbCount: number;
+};
 
 async function getDashboardData() {
   const admin = createAdminClient();
 
-  const [propertiesResult, pendingResult, checkInsResult, recentResult] = await Promise.all([
-    admin
-      .from("properties")
-      .select("id", { count: "exact" })
-      .eq("is_active", true),
-    admin
-      .from("booking_requests")
-      .select("id", { count: "exact" })
-      .eq("status", "pending"),
-    admin
-      .from("booking_requests")
-      .select("id", { count: "exact" })
-      .eq("status", "confirmed")
-      .gte("check_in", new Date().toISOString().split("T")[0]),
-    admin
-      .from("booking_requests")
-      .select("*, properties(title)")
-      .order("created_at", { ascending: false })
-      .limit(5),
-  ]);
+  const [propertiesResult, pendingResult, checkInsResult, recentResult, syncResult] =
+    await Promise.all([
+      admin
+        .from("properties")
+        .select("id", { count: "exact" })
+        .eq("is_active", true),
+      admin
+        .from("booking_requests")
+        .select("id", { count: "exact" })
+        .eq("status", "pending"),
+      admin
+        .from("booking_requests")
+        .select("id", { count: "exact" })
+        .eq("status", "confirmed")
+        .gte("check_in", new Date().toISOString().split("T")[0]),
+      admin
+        .from("booking_requests")
+        .select("*, properties(title)")
+        .order("created_at", { ascending: false })
+        .limit(5),
+      // Fetch last sync info per property (latest synced_at for airbnb source)
+      admin
+        .from("properties")
+        .select("id, title, airbnb_ical_url")
+        .not("airbnb_ical_url", "is", null)
+        .eq("is_active", true),
+    ]);
+
+  // Build last sync data: for each property with an iCal URL, get the latest synced_at
+  const lastSyncs: LastSync[] = [];
+  if (syncResult.data && syncResult.data.length > 0) {
+    for (const property of syncResult.data) {
+      const { data: dates } = await admin
+        .from("blocked_dates")
+        .select("synced_at")
+        .eq("property_id", property.id)
+        .eq("source", "airbnb")
+        .order("synced_at", { ascending: false })
+        .limit(1);
+
+      const { count: airbnbCount } = await admin
+        .from("blocked_dates")
+        .select("id", { count: "exact" })
+        .eq("property_id", property.id)
+        .eq("source", "airbnb");
+
+      lastSyncs.push({
+        propertyId: property.id,
+        title: property.title,
+        syncedAt: dates?.[0]?.synced_at ?? null,
+        airbnbCount: airbnbCount ?? 0,
+      });
+    }
+  }
 
   return {
     activeProperties: propertiesResult.count ?? 0,
     pendingRequests: pendingResult.count ?? 0,
     upcomingCheckIns: checkInsResult.count ?? 0,
     recentRequests: recentResult.data ?? [],
+    lastSyncs,
   };
 }
 
@@ -50,7 +92,7 @@ function statusLabel(status: string | null) {
 }
 
 export default async function AdminDashboard() {
-  const { activeProperties, pendingRequests, upcomingCheckIns, recentRequests } =
+  const { activeProperties, pendingRequests, upcomingCheckIns, recentRequests, lastSyncs } =
     await getDashboardData();
 
   const stats = [
@@ -169,6 +211,61 @@ export default async function AdminDashboard() {
           )}
         </CardContent>
       </Card>
+
+      {/* Airbnb Sync Status */}
+      {lastSyncs.length > 0 && (
+        <Card className="border border-[#E8DCC8]">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle className="text-lg font-semibold text-[#2D3436] flex items-center gap-2">
+              <RefreshCw className="w-5 h-5 text-[#4A90A4]" />
+              Stato Sincronizzazione Airbnb
+            </CardTitle>
+            <Link
+              href="/admin/properties"
+              className="text-sm text-[#4A90A4] hover:underline"
+            >
+              Gestisci proprietà
+            </Link>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {lastSyncs.map((sync) => (
+                <div
+                  key={sync.propertyId}
+                  className="flex items-center justify-between py-2 border-b border-[#E8DCC8] last:border-0"
+                >
+                  <div>
+                    <p className="text-sm font-medium text-[#2D3436]">{sync.title}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {sync.airbnbCount} date bloccate da Airbnb
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    {sync.syncedAt ? (
+                      <>
+                        <p className="text-xs text-muted-foreground">Ultima sync</p>
+                        <p className="text-sm font-medium text-[#2D3436]">
+                          {new Date(sync.syncedAt).toLocaleString("it-IT", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </p>
+                      </>
+                    ) : (
+                      <Badge variant="outline" className="text-xs">
+                        Mai sincronizzata
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

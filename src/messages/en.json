@@ -2,11 +2,14 @@
   "nav": {
     "home": "Home",
     "apartments": "Apartments",
-    "aboutUs": "About Us"
+    "aboutUs": "About Us",
+    "bookNow": "Book now"
   },
   "footer": {
     "rights": "All rights reserved",
-    "directBooking": "Direct booking — no commission"
+    "directBooking": "Direct booking — no commission",
+    "tagline": "Holiday apartments in Viareggio, Versilia.",
+    "legal": "Property registered in accordance with regional tourism regulations."
   },
   "common": {
     "guests": "guests",
@@ -19,17 +22,36 @@
     "sendRequest": "Send request",
     "loading": "Loading..."
   },
+  "hero": {
+    "eyebrow": "Viareggio · Versilia",
+    "words": ["Holiday", "Apartments", "in", "Viareggio"],
+    "subtitle": "Steps from the Versilia sea. Book directly, no intermediaries.",
+    "ctaExplore": "Discover apartments",
+    "ctaContact": "Contact us",
+    "scrollLabel": "Scroll"
+  },
   "home": {
     "heroTitle": "Holidays in Versilia",
     "heroSubtitle": "Apartments in Viareggio, steps from the sea",
     "heroCta": "Discover our apartments",
     "whyDirectTitle": "Why book directly?",
-    "whyDirect1Title": "No commission",
-    "whyDirect1Desc": "Save up to 15% compared to online platforms",
-    "whyDirect2Title": "Direct contact",
-    "whyDirect2Desc": "Talk directly with the owner via WhatsApp or email",
+    "whyDirect1Title": "Save on commissions",
+    "whyDirect1Desc": "Airbnb takes up to 20%. Here you pay only the rent.",
+    "whyDirect2Title": "Direct contact with owners",
+    "whyDirect2Desc": "Fast replies via WhatsApp and email.",
     "whyDirect3Title": "Maximum flexibility",
-    "whyDirect3Desc": "Custom solutions for your needs"
+    "whyDirect3Desc": "Custom arrangements for check-in times, pets, and special needs."
+  },
+  "propertyCard": {
+    "fromPrice": "from",
+    "perNight": "/ night",
+    "guests": "guests",
+    "bedrooms": "bedrooms",
+    "beds": "beds",
+    "bathrooms": "bathrooms",
+    "rating": "Rating",
+    "guestFavorite": "Guest Favorite",
+    "contactForPrice": "Contact us for pricing"
   },
   "booking": {
     "title": "Request booking",
@@ -40,13 +62,22 @@
     "message": "Message (optional)",
     "checkIn": "Check-in",
     "checkOut": "Check-out",
+    "selectDates": "Select dates",
     "estimatedPrice": "Estimated price",
     "nights": "nights",
     "total": "Total",
     "submit": "Send request",
+    "submitting": "Sending...",
     "success": "Request sent!",
-    "successDesc": "We'll get back to you within 24 hours. You can also contact us on WhatsApp.",
-    "whatsapp": "Contact on WhatsApp"
+    "successDesc": "We'll contact you within 24 hours to confirm availability.",
+    "whatsapp": "Contact on WhatsApp",
+    "newRequest": "New request",
+    "noPaymentRequired": "No payment required now."
+  },
+  "calendar": {
+    "minNightsWarning": "Minimum stay: {nights} nights. Please select a longer period.",
+    "selectCheckout": "Select checkout date",
+    "blockedDates": "Unavailable dates"
   },
   "about": {
     "title": "About Us",

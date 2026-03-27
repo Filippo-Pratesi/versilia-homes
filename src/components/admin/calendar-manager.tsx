@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/src/style.css";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, RefreshCw } from "lucide-react";
 import { format, parseISO } from "date-fns";
 import { it } from "date-fns/locale";
 
@@ -24,6 +24,7 @@ export function CalendarManager({ propertyId }: CalendarManagerProps) {
   const [blockedDates, setBlockedDates] = useState<BlockedDate[]>([]);
   const [loading, setLoading] = useState(true);
   const [togglingDate, setTogglingDate] = useState<string | null>(null);
+  const [syncing, setSyncing] = useState(false);
 
   const fetchBlockedDates = useCallback(async () => {
     try {
@@ -98,6 +99,31 @@ export function CalendarManager({ propertyId }: CalendarManagerProps) {
     }
   }
 
+  async function handleForceSync() {
+    if (syncing) return;
+    setSyncing(true);
+
+    try {
+      const res = await fetch("/api/admin/sync", { method: "POST" });
+      const data = await res.json();
+
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error ?? "Errore durante la sincronizzazione");
+      }
+
+      toast.success(
+        `Sincronizzazione completata: ${data.succeeded}/${data.total} proprietà aggiornate.`
+      );
+
+      // Refresh blocked dates after sync
+      await fetchBlockedDates();
+    } catch (err) {
+      toast.error((err as Error).message ?? "Errore durante la sincronizzazione Airbnb.");
+    } finally {
+      setSyncing(false);
+    }
+  }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-16">
@@ -108,10 +134,24 @@ export function CalendarManager({ propertyId }: CalendarManagerProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-muted-foreground">
-        Clicca su una data disponibile per bloccarla manualmente. Clicca su una data bloccata manualmente per sbloccarla.
-        Le date bloccate da Airbnb non possono essere modificate.
-      </p>
+      <div className="flex items-start justify-between gap-4">
+        <p className="text-sm text-muted-foreground">
+          Clicca su una data disponibile per bloccarla manualmente. Clicca su una data bloccata manualmente per sbloccarla.
+          Le date bloccate da Airbnb non possono essere modificate.
+        </p>
+        <button
+          onClick={handleForceSync}
+          disabled={syncing}
+          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#4A90A4] hover:bg-[#3a7a8e] disabled:opacity-60 disabled:cursor-not-allowed rounded-lg transition-colors shrink-0"
+        >
+          {syncing ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            <RefreshCw className="w-4 h-4" />
+          )}
+          Forza Sync
+        </button>
+      </div>
 
       {/* Calendar */}
       <div className="flex justify-center">

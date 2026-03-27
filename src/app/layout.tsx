@@ -18,12 +18,23 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://versiliahomes.it'),
   title: {
-    default: "Vacanze in Versilia — Appartamenti a Viareggio",
-    template: "%s | Vacanze in Versilia",
+    default: 'Vacanze in Versilia — Appartamenti a Viareggio',
+    template: '%s | Versilia Homes',
   },
-  description:
-    "Prenota direttamente i nostri appartamenti vacanza a Viareggio, Versilia. Contatto diretto con i proprietari, nessuna commissione.",
+  description: 'Prenota direttamente i tuoi appartamenti vacanza a Viareggio, Versilia. A pochi passi dal mare. Contatto diretto con i proprietari, senza commissioni Airbnb.',
+  keywords: ['appartamenti viareggio', 'vacanze versilia', 'affitto mare viareggio', 'versilia homes', 'prenotazione diretta'],
+  authors: [{ name: 'Versilia Homes' }],
+  openGraph: {
+    type: 'website',
+    locale: 'it_IT',
+    siteName: 'Versilia Homes',
+    title: 'Vacanze in Versilia — Appartamenti a Viareggio',
+    description: 'Appartamenti vacanza a Viareggio, a pochi passi dal mare della Versilia.',
+  },
+  twitter: { card: 'summary_large_image' },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
