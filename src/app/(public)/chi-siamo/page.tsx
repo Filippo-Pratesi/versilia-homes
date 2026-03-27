@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { Mail, MessageSquare, Heart, Anchor, Sun } from "lucide-react";
+import { Heart, Anchor, Sun } from "lucide-react";
 import Link from "next/link";
+import { ContactForm } from "@/components/public/contact-form";
+import { WhatsAppSelector } from "@/components/public/whatsapp-selector";
 
 export const metadata: Metadata = {
   title: 'Chi Siamo',
@@ -145,40 +147,63 @@ export default function ChiSiamoPage() {
         </div>
       </section>
 
-      {/* Contact */}
+      {/* Contact — form + WhatsApp */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center space-y-8">
-          <h2
-            className="font-display text-3xl sm:text-4xl font-semibold text-[#2D3436]"
-            style={{ fontFamily: "var(--font-cormorant)" }}
-          >
-            Scrivici
-          </h2>
-          <p className="text-[#636E72]">
-            Siamo a tua disposizione per qualsiasi domanda. Rispondiamo sempre
-            entro poche ore.
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md mx-auto">
-            <a
-              href="mailto:prenotazioni@versiliahomes.it"
-              className="flex items-center justify-center gap-2.5 px-6 py-4 bg-[#4A90A4] text-white rounded-xl text-sm font-medium hover:bg-[#3A7A8E] transition-colors shadow-md shadow-[#4A90A4]/20"
+        <div className="max-w-5xl mx-auto">
+          {/* Section heading */}
+          <div className="text-center mb-12">
+            <h2
+              className="font-display text-3xl sm:text-4xl font-semibold text-[#2D3436]"
+              style={{ fontFamily: "var(--font-cormorant)" }}
             >
-              <Mail className="h-4 w-4" />
-              Scrivici via email
-            </a>
-            <a
-              href="https://wa.me/39"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2.5 px-6 py-4 bg-[#25D366] text-white rounded-xl text-sm font-medium hover:bg-[#1ebe5a] transition-colors"
-            >
-              <MessageSquare className="h-4 w-4" />
-              WhatsApp
-            </a>
+              Scrivici
+            </h2>
+            <p className="mt-3 text-[#636E72] max-w-lg mx-auto">
+              Siamo a tua disposizione per qualsiasi domanda. Rispondiamo sempre
+              entro poche ore.
+            </p>
           </div>
 
-          <div className="pt-4">
+          {/* Two-column layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-12 items-start">
+            {/* Left — email form */}
+            <div className="space-y-4">
+              <h3
+                className="font-display text-2xl font-semibold text-[#2D3436]"
+                style={{ fontFamily: "var(--font-cormorant)" }}
+              >
+                Mandaci un messaggio
+              </h3>
+              <p className="text-sm text-[#636E72] mb-6">
+                Compila il form e ti risponderemo all&apos;indirizzo email che hai
+                indicato.
+              </p>
+              <ContactForm />
+            </div>
+
+            {/* Divider — visible only on desktop */}
+            <div className="hidden lg:block absolute left-1/2 top-0 h-full w-px bg-[#E8DCC8]" aria-hidden="true" />
+
+            {/* Mobile divider */}
+            <div className="lg:hidden my-10 border-t border-[#E8DCC8]" aria-hidden="true" />
+
+            {/* Right — WhatsApp */}
+            <div className="space-y-4">
+              <h3
+                className="font-display text-2xl font-semibold text-[#2D3436]"
+                style={{ fontFamily: "var(--font-cormorant)" }}
+              >
+                WhatsApp
+              </h3>
+              <p className="text-sm text-[#636E72] mb-6">
+                Scegli l&apos;appartamento e apri la chat direttamente.
+              </p>
+              <WhatsAppSelector />
+            </div>
+          </div>
+
+          {/* Bottom link */}
+          <div className="mt-12 text-center">
             <p className="text-sm text-[#636E72]">
               Oppure{" "}
               <Link

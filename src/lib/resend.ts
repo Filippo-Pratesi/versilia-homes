@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 
-export const EMAIL_FROM = process.env.EMAIL_FROM || 'prenotazioni@versiliahomes.it';
+export const EMAIL_FROM = process.env.EMAIL_FROM || 'prenotazioni@viareggiohomes.it';
 
 // Lazy singleton — only instantiate when actually sending (avoids build crash when key is missing)
 let _resend: Resend | null = null;
