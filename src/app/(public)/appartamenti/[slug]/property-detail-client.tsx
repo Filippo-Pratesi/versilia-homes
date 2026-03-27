@@ -18,6 +18,8 @@ import {
   WashingMachine,
   ExternalLink,
 } from "lucide-react";
+import { format, differenceInCalendarDays } from "date-fns";
+import { it } from "date-fns/locale";
 import { PhotoGallery } from "@/components/public/photo-gallery";
 import { AvailabilityCalendar } from "@/components/public/availability-calendar";
 import { BookingForm } from "@/components/public/booking-form";
@@ -27,7 +29,6 @@ interface PropertyDetailClientProps {
   property: PropertyFull;
 }
 
-// Map amenity strings to Lucide icons
 const amenityIcons: Record<string, React.ElementType> = {
   wifi: Wifi,
   parcheggio: Car,
@@ -36,7 +37,7 @@ const amenityIcons: Record<string, React.ElementType> = {
   "aria-condizionata": Wind,
   tv: Tv,
   "smart tv": Tv,
-  "caffettiera": Coffee,
+  caffettiera: Coffee,
   cucina: UtensilsCrossed,
   lavatrice: WashingMachine,
 };
@@ -47,6 +48,30 @@ function getAmenityIcon(amenity: string): React.ElementType {
     if (lower.includes(key)) return Icon;
   }
   return Waves;
+}
+
+function getPriceForDates(
+  property: PropertyFull,
+  checkIn: Date,
+  checkOut: Date
+): number {
+  const nights = differenceInCalendarDays(checkOut, checkIn);
+  if (nights <= 0) return 0;
+
+  // Find applicable rule (non-default seasonal rules take priority)
+  const seasonal = property.pricing_rules
+    .filter((r) => !r.is_default && r.date_from && r.date_to)
+    .find((r) => {
+      const from = new Date(r.date_from!);
+      const to = new Date(r.date_to!);
+      return checkIn >= from && checkIn <= to;
+    });
+
+  const defaultRule = property.pricing_rules.find((r) => r.is_default);
+  const pricePerNight =
+    seasonal?.price_per_night ?? defaultRule?.price_per_night ?? 0;
+
+  return Number(pricePerNight) * nights;
 }
 
 export function PropertyDetailClient({ property }: PropertyDetailClientProps) {
@@ -60,10 +85,20 @@ export function PropertyDetailClient({ property }: PropertyDetailClientProps) {
     property.pricing_rules[0]?.min_nights ??
     1;
 
+  const defaultPrice =
+    property.pricing_rules.find((r) => r.is_default)?.price_per_night ?? 0;
+
   const handleRangeSelect = (from: Date, to: Date) => {
     setCheckIn(from);
     setCheckOut(to);
   };
+
+  const nights =
+    checkIn && checkOut ? differenceInCalendarDays(checkOut, checkIn) : null;
+  const totalPrice =
+    checkIn && checkOut ? getPriceForDates(property, checkIn, checkOut) : null;
+
+  const formatShort = (d: Date) => format(d, "d MMM", { locale: it });
 
   return (
     <div className="min-h-screen bg-[#FAFAF8]">
@@ -77,9 +112,9 @@ export function PropertyDetailClient({ property }: PropertyDetailClientProps) {
         </div>
 
         {/* Two-column layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-10">
-          {/* Left: Info column */}
-          <div className="space-y-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10">
+          {/* ── Left: main content ── */}
+          <div className="space-y-10">
             {/* Title block */}
             <div>
               <h1
@@ -93,13 +128,10 @@ export function PropertyDetailClient({ property }: PropertyDetailClientProps) {
               )}
 
               <div className="flex flex-wrap items-center gap-4 mt-4">
-                {/* Location */}
                 <div className="flex items-center gap-1.5 text-sm text-[#636E72]">
                   <MapPin className="h-4 w-4 text-[#4A90A4]" />
                   <span>{property.location}</span>
                 </div>
-
-                {/* Rating */}
                 {property.rating && (
                   <div className="flex items-center gap-1.5 text-sm">
                     <Star className="h-4 w-4 fill-[#C2714F] text-[#C2714F]" />
@@ -183,29 +215,38 @@ export function PropertyDetailClient({ property }: PropertyDetailClientProps) {
               </div>
             )}
 
-            {/* Mobile booking form */}
-            <div className="lg:hidden mt-8">
-              <div className="bg-white border border-[#E0D8CC] rounded-2xl p-5 space-y-6">
-                <div>
-                  <h3
-                    className="font-display text-xl font-semibold text-[#2D3436] mb-4"
-                    style={{ fontFamily: "var(--font-cormorant)" }}
-                  >
-                    Seleziona le date
-                  </h3>
-                  <AvailabilityCalendar
-                    blockedDates={blockedDates}
-                    onRangeSelect={handleRangeSelect}
-                    minNights={minNights}
-                  />
-                </div>
-                <BookingForm
-                  property={property}
-                  checkIn={checkIn}
-                  checkOut={checkOut}
-                  onDatesSet={handleRangeSelect}
-                />
+            {/* ── Availability calendar (main area) ── */}
+            <div className="space-y-4">
+              <div>
+                <h2
+                  className="font-display text-2xl font-semibold text-[#2D3436]"
+                  style={{ fontFamily: "var(--font-cormorant)" }}
+                >
+                  Disponibilità
+                </h2>
+                {minNights > 1 && (
+                  <p className="text-sm text-[#636E72] mt-1">
+                    Soggiorno minimo: {minNights} notti
+                  </p>
+                )}
               </div>
+
+              <AvailabilityCalendar
+                blockedDates={blockedDates}
+                onRangeSelect={handleRangeSelect}
+                minNights={minNights}
+                numberOfMonths={2}
+              />
+            </div>
+
+            {/* Mobile booking form */}
+            <div className="lg:hidden">
+              <BookingForm
+                property={property}
+                checkIn={checkIn}
+                checkOut={checkOut}
+                onDatesSet={handleRangeSelect}
+              />
             </div>
 
             {/* Airbnb link */}
@@ -231,29 +272,68 @@ export function PropertyDetailClient({ property }: PropertyDetailClientProps) {
             )}
           </div>
 
-          {/* Right: sticky booking sidebar (desktop) */}
+          {/* ── Right: sticky sidebar ── */}
           <div className="hidden lg:block">
-            <div className="sticky top-24 bg-white border border-[#E0D8CC] rounded-2xl p-6 shadow-sm space-y-6">
-              <div>
-                <h3
-                  className="font-display text-xl font-semibold text-[#2D3436] mb-4"
-                  style={{ fontFamily: "var(--font-cormorant)" }}
-                >
-                  Seleziona le date
-                </h3>
-                <AvailabilityCalendar
-                  blockedDates={blockedDates}
-                  onRangeSelect={handleRangeSelect}
-                  minNights={minNights}
+            <div className="sticky top-24 bg-white border border-[#E0D8CC] rounded-2xl shadow-sm overflow-hidden">
+              {/* Price header */}
+              <div className="p-6 border-b border-[#E0D8CC]">
+                <div className="flex items-baseline gap-1">
+                  <span className="text-2xl font-bold text-[#2D3436]">
+                    €{Number(defaultPrice).toFixed(0)}
+                  </span>
+                  <span className="text-sm text-[#636E72]">/ notte</span>
+                </div>
+                {property.rating && (
+                  <div className="flex items-center gap-1 mt-1 text-xs text-[#636E72]">
+                    <Star className="h-3 w-3 fill-[#C2714F] text-[#C2714F]" />
+                    <span className="font-semibold text-[#2D3436]">
+                      {property.rating.toFixed(1)}
+                    </span>
+                    {property.reviews_count && (
+                      <span>· {property.reviews_count} recensioni</span>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Selected dates summary */}
+              {checkIn && checkOut && nights ? (
+                <div className="px-6 py-4 bg-[#FAFAF8] border-b border-[#E0D8CC] space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-[#636E72]">
+                      {formatShort(checkIn)} → {formatShort(checkOut)}
+                    </span>
+                    <span className="font-medium text-[#2D3436]">
+                      {nights} notti
+                    </span>
+                  </div>
+                  {totalPrice !== null && (
+                    <div className="flex justify-between font-semibold text-[#2D3436]">
+                      <span>Totale stimato</span>
+                      <span>€{totalPrice.toFixed(0)}</span>
+                    </div>
+                  )}
+                  <p className="text-[10px] text-[#636E72]">
+                    Il totale finale viene confermato via email.
+                  </p>
+                </div>
+              ) : (
+                <div className="px-6 py-4 bg-[#FAFAF8] border-b border-[#E0D8CC]">
+                  <p className="text-sm text-[#636E72] text-center">
+                    Seleziona le date nel calendario per vedere il totale
+                  </p>
+                </div>
+              )}
+
+              {/* Booking form */}
+              <div className="p-6">
+                <BookingForm
+                  property={property}
+                  checkIn={checkIn}
+                  checkOut={checkOut}
+                  onDatesSet={handleRangeSelect}
                 />
               </div>
-              <hr className="border-[#E0D8CC]" />
-              <BookingForm
-                property={property}
-                checkIn={checkIn}
-                checkOut={checkOut}
-                onDatesSet={handleRangeSelect}
-              />
             </div>
           </div>
         </div>
