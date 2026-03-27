@@ -31,16 +31,30 @@ function getPriceForRange(
 ): number {
   const nights = differenceInCalendarDays(checkOut, checkIn);
   if (nights <= 0) return 0;
-  const seasonal = property.pricing_rules
+
+  // Among overlapping seasonal rules pick the most specific (shortest range)
+  const candidates = property.pricing_rules
     .filter((r) => !r.is_default && r.date_from && r.date_to)
-    .find((r) => {
-      const from = new Date(r.date_from!);
-      const to = new Date(r.date_to!);
+    .filter((r) => {
+      const from = startOfDay(new Date(r.date_from!));
+      const to = startOfDay(new Date(r.date_to!));
       return checkIn >= from && checkIn <= to;
+    })
+    .sort((a, b) => {
+      const lenA = differenceInCalendarDays(new Date(a.date_to!), new Date(a.date_from!));
+      const lenB = differenceInCalendarDays(new Date(b.date_to!), new Date(b.date_from!));
+      return lenA - lenB; // shorter range = more specific = higher priority
     });
+
+  const seasonal = candidates[0];
   const def = property.pricing_rules.find((r) => r.is_default);
   const ppn = Number(seasonal?.price_per_night ?? def?.price_per_night ?? 0);
   return roundToNearest5(ppn * nights);
+}
+
+// Returns true if any blocked date falls strictly inside [from, to)
+function rangeContainsBlockedDate(from: Date, to: Date, blockedDates: Date[]): boolean {
+  return blockedDates.some((d) => d > from && d < to);
 }
 
 export function BookingWidget({ property }: BookingWidgetProps) {
@@ -49,6 +63,7 @@ export function BookingWidget({ property }: BookingWidgetProps) {
   const [guests, setGuests] = useState(1);
   const [showForm, setShowForm] = useState(false);
   const [minNightsWarning, setMinNightsWarning] = useState(false);
+  const [blockedInRangeWarning, setBlockedInRangeWarning] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const today = startOfDay(new Date());
@@ -93,6 +108,7 @@ export function BookingWidget({ property }: BookingWidgetProps) {
   const handleSelect = useCallback(
     (selected: DateRange | undefined) => {
       setMinNightsWarning(false);
+      setBlockedInRangeWarning(false);
 
       if (!selected) {
         setRange(undefined);
@@ -106,33 +122,28 @@ export function BookingWidget({ property }: BookingWidgetProps) {
         return;
       }
 
-      // If picking checkout
-      if (activeField === "checkout" && selected.from && selected.to) {
-        const nights = differenceInCalendarDays(selected.to, selected.from);
-        if (nights < minNights) {
-          setMinNightsWarning(true);
-          return;
-        }
-        setRange(selected);
-        setActiveField(null); // close calendar
-        return;
-      }
-
-      // Fallback: full range selected
+      // Validate a full range (checkout selected or fallback)
       if (selected.from && selected.to) {
         const nights = differenceInCalendarDays(selected.to, selected.from);
         if (nights < minNights) {
           setMinNightsWarning(true);
           return;
         }
+        if (rangeContainsBlockedDate(selected.from, selected.to, blockedDates)) {
+          setBlockedInRangeWarning(true);
+          setRange({ from: selected.from, to: undefined });
+          setActiveField("checkout");
+          return;
+        }
         setRange(selected);
         setActiveField(null);
-      } else {
-        setRange(selected);
-        if (selected.from && !selected.to) setActiveField("checkout");
+        return;
       }
+
+      setRange(selected);
+      if (selected.from && !selected.to) setActiveField("checkout");
     },
-    [activeField, minNights]
+    [activeField, minNights, blockedDates]
   );
 
   const clearDates = (e: React.MouseEvent) => {
@@ -140,6 +151,7 @@ export function BookingWidget({ property }: BookingWidgetProps) {
     setRange(undefined);
     setActiveField(null);
     setMinNightsWarning(false);
+    setBlockedInRangeWarning(false);
     setShowForm(false);
   };
 
@@ -290,8 +302,14 @@ export function BookingWidget({ property }: BookingWidgetProps) {
         {minNightsWarning && (
           <div className="mx-4 mt-2 text-xs text-[#C2714F] bg-[#C2714F]/10 px-3 py-2 rounded-lg">
             Soggiorno minimo: {minNights}{" "}
-            {minNights === 1 ? "notte" : "notti"}. Seleziona un periodo più
-            lungo.
+            {minNights === 1 ? "notte" : "notti"}. Seleziona un periodo più lungo.
+          </div>
+        )}
+
+        {/* Blocked dates in range warning */}
+        {blockedInRangeWarning && (
+          <div className="mx-4 mt-2 text-xs text-[#C2714F] bg-[#C2714F]/10 px-3 py-2 rounded-lg">
+            Il periodo selezionato include date non disponibili. Scegli un check-out precedente o un check-in successivo alle date occupate.
           </div>
         )}
 
