@@ -34,8 +34,8 @@ interface PropertiesMapProps {
   properties: MapProperty[];
 }
 
-// Center of Viareggio
-const VIAREGGIO_CENTER: [number, number] = [43.8695, 10.2527];
+// Center calculated from the 3 properties
+const VIAREGGIO_CENTER: [number, number] = [43.8824, 10.2429];
 
 export function PropertiesMap({ properties }: PropertiesMapProps) {
   return (
