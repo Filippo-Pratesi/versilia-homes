@@ -30,7 +30,8 @@ export async function POST(request: NextRequest) {
 
   const { name, email, subject, message } = parsed.data;
 
-  const html = `
+  // Email to owner
+  const ownerHtml = `
     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #2D3436;">
       <h2 style="color: #4A90A4; border-bottom: 2px solid #E8DCC8; padding-bottom: 12px;">
         Nuovo messaggio dal sito Viareggio Homes
@@ -55,7 +56,55 @@ export async function POST(request: NextRequest) {
       </table>
       <hr style="border: none; border-top: 1px solid #E8DCC8; margin: 24px 0;" />
       <p style="font-size: 12px; color: #636E72;">
-        Risposta suggerita: <a href="mailto:${email}" style="color: #4A90A4;">${email}</a>
+        Rispondi a: <a href="mailto:${email}" style="color: #4A90A4;">${email}</a>
+      </p>
+    </div>
+  `;
+
+  // Auto-reply to the sender
+  const autoReplyHtml = `
+    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #2D3436;">
+      <div style="text-align: center; padding: 32px 0 24px;">
+        <p style="font-size: 13px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #4A90A4; margin: 0 0 8px;">
+          Viareggio Homes
+        </p>
+        <h1 style="font-size: 28px; font-weight: 600; color: #2D3436; margin: 0;">
+          Messaggio ricevuto
+        </h1>
+      </div>
+
+      <div style="background: #F7F3EC; border-radius: 12px; padding: 24px 28px; margin-bottom: 24px;">
+        <p style="margin: 0 0 12px; color: #2D3436;">Ciao ${name},</p>
+        <p style="margin: 0 0 12px; color: #636E72; line-height: 1.6;">
+          Grazie per averci scritto! Abbiamo ricevuto il tuo messaggio e ti risponderemo
+          entro poche ore all'indirizzo <strong style="color: #2D3436;">${email}</strong>.
+        </p>
+        <p style="margin: 0; color: #636E72; line-height: 1.6;">
+          Nel frattempo, puoi sfogliare i nostri appartamenti o contattarci direttamente
+          su WhatsApp per una risposta ancora più rapida.
+        </p>
+      </div>
+
+      <div style="background: white; border: 1px solid #E8DCC8; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px;">
+        <p style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #636E72; margin: 0 0 12px;">
+          Il tuo messaggio
+        </p>
+        <p style="margin: 0 0 4px; font-weight: 600; color: #2D3436;">${subject}</p>
+        <p style="margin: 0; color: #636E72; white-space: pre-wrap; font-size: 14px; line-height: 1.6;">${message}</p>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 32px;">
+        <a href="https://viareggiohomes.it/appartamenti"
+           style="display: inline-block; background: #4A90A4; color: white; text-decoration: none;
+                  padding: 12px 28px; border-radius: 8px; font-weight: 600; font-size: 14px;">
+          Sfoglia gli appartamenti
+        </a>
+      </div>
+
+      <hr style="border: none; border-top: 1px solid #E8DCC8; margin: 0 0 16px;" />
+      <p style="font-size: 12px; color: #636E72; text-align: center; margin: 0;">
+        Viareggio Homes · Viareggio, Versilia ·
+        <a href="https://viareggiohomes.it" style="color: #4A90A4; text-decoration: none;">viareggiohomes.it</a>
       </p>
     </div>
   `;
@@ -63,12 +112,22 @@ export async function POST(request: NextRequest) {
   try {
     const resendClient = getResend();
     if (resendClient) {
-      await resendClient.emails.send({
-        from: EMAIL_FROM,
-        to: 'prenotazioni@viareggiohomes.it',
-        subject: `[Contatto] ${subject} — da ${name}`,
-        html,
-      });
+      // Send both emails concurrently (non-fatal individually)
+      await Promise.allSettled([
+        resendClient.emails.send({
+          from: EMAIL_FROM,
+          to: 'prenotazioni@viareggiohomes.it',
+          replyTo: email,
+          subject: `[Contatto] ${subject} — da ${name}`,
+          html: ownerHtml,
+        }),
+        resendClient.emails.send({
+          from: EMAIL_FROM,
+          to: email,
+          subject: `Abbiamo ricevuto il tuo messaggio — Viareggio Homes`,
+          html: autoReplyHtml,
+        }),
+      ]);
     } else {
       console.warn('[contact] Email skipped — RESEND_API_KEY not set');
     }
