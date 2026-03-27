@@ -4,7 +4,7 @@ import { PropertyDetailClient } from "./property-detail-client";
 import type { PropertyFull } from "@/types";
 import type { Metadata } from "next";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 interface Params {
   slug: string;

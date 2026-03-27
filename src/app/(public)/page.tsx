@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description: 'Prenota direttamente i tuoi appartamenti vacanza a Viareggio, Versilia. A pochi passi dal mare. Contatto diretto con i proprietari, senza commissioni Airbnb.',
 };
 
-export const revalidate = 3600; // revalidate every hour
+export const revalidate = 60; // revalidate every hour
 
 async function fetchProperties(): Promise<
   (PropertyWithPhotos & { pricing_rules: PricingRule[] })[]

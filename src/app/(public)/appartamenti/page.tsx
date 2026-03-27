@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: 'Scopri i nostri 3 appartamenti a Viareggio: Il Nido, La Pineta e Il Veliero. A 500m dal mare, prenotazione diretta senza commissioni.',
 };
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 async function fetchProperties(): Promise<
   (PropertyWithPhotos & { pricing_rules: PricingRule[] })[]
