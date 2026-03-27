@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { PhotoGallery } from "@/components/public/photo-gallery";
 import { BookingWidget } from "@/components/public/booking-widget";
+import { PropertyMap } from "@/components/public/property-map-dynamic";
 import type { PropertyFull } from "@/types";
 
 interface PropertyDetailClientProps {
@@ -172,6 +173,30 @@ export function PropertyDetailClient({ property }: PropertyDetailClientProps) {
               </h2>
               <BookingWidget property={property} />
             </div>
+
+            {/* Map */}
+            {property.latitude && property.longitude && (
+              <div className="space-y-3">
+                <h2
+                  className="font-display text-2xl font-semibold text-[#2D3436]"
+                  style={{ fontFamily: "var(--font-cormorant)" }}
+                >
+                  Dove si trova
+                </h2>
+                {property.address && (
+                  <p className="text-sm text-[#636E72] flex items-center gap-1.5">
+                    <MapPin className="h-4 w-4 text-[#4A90A4] shrink-0" />
+                    {property.address}, Viareggio
+                  </p>
+                )}
+                <PropertyMap
+                  title={property.title}
+                  address={`${property.address ?? ""}, Viareggio`}
+                  lat={property.latitude}
+                  lng={property.longitude}
+                />
+              </div>
+            )}
 
             {/* Airbnb link */}
             {property.airbnb_url && (

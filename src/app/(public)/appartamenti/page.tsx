@@ -1,5 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { PropertiesGrid } from "@/components/public/properties-grid";
+import { PropertiesMap, type MapProperty } from "@/components/public/properties-map-dynamic";
 import type { PropertyWithPhotos, PricingRule } from "@/types";
 import type { Metadata } from "next";
 
@@ -17,13 +18,7 @@ async function fetchProperties(): Promise<
     const admin = createAdminClient();
     const { data, error } = await admin
       .from("properties")
-      .select(
-        `
-        *,
-        property_photos(*),
-        pricing_rules(*)
-      `
-      )
+      .select(`*, property_photos(*), pricing_rules(*)`)
       .eq("is_active", true)
       .order("sort_order", { ascending: true });
 
@@ -32,9 +27,7 @@ async function fetchProperties(): Promise<
       return [];
     }
 
-    return (data ?? []) as (PropertyWithPhotos & {
-      pricing_rules: PricingRule[];
-    })[];
+    return (data ?? []) as (PropertyWithPhotos & { pricing_rules: PricingRule[] })[];
   } catch (err) {
     console.error("[appartamenti] Unexpected error:", err);
     return [];
@@ -43,6 +36,16 @@ async function fetchProperties(): Promise<
 
 export default async function AppartamentiPage() {
   const properties = await fetchProperties();
+
+  const mapProperties: MapProperty[] = properties
+    .filter((p) => p.latitude != null && p.longitude != null)
+    .map((p) => ({
+      slug: p.slug,
+      title: p.title,
+      address: p.address ?? p.location,
+      lat: p.latitude!,
+      lng: p.longitude!,
+    }));
 
   return (
     <div className="min-h-screen bg-[#FAFAF8]">
@@ -64,6 +67,26 @@ export default async function AppartamentiPage() {
       </div>
 
       <PropertiesGrid properties={properties} />
+
+      {/* Map section */}
+      {mapProperties.length > 0 && (
+        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#FAFAF8] border-t border-[#E0D8CC]">
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-8 text-center">
+              <h2
+                className="font-display text-4xl font-semibold text-[#2D3436] mb-2"
+                style={{ fontFamily: "var(--font-cormorant)" }}
+              >
+                Dove Siamo
+              </h2>
+              <p className="text-[#636E72] text-sm">
+                Tutti i nostri appartamenti si trovano a Viareggio, a pochi passi dal mare
+              </p>
+            </div>
+            <PropertiesMap properties={mapProperties} />
+          </div>
+        </section>
+      )}
     </div>
   );
 }
