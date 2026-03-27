@@ -12,18 +12,18 @@ interface Apartment {
 
 const APARTMENTS: Apartment[] = [
   {
-    name: 'La Casina al Fresco',
+    name: 'Il Nido',
     description: '1 camera · 2 ospiti · giardino privato',
     phone: '393398518814',
   },
   {
-    name: 'Seaside Apartment',
-    description: '2 camere · 4 ospiti · vista mare',
+    name: 'La Pineta',
+    description: '2 camere · 4 ospiti · vicino al mare',
     phone: '393398518814',
   },
   {
-    name: 'Appartamento 3 camere',
-    description: '3 camere · 6 ospiti · ampi spazi',
+    name: 'Il Veliero',
+    description: '3 camere · 7 ospiti · ampi spazi',
     phone: '393486897408',
   },
 ];

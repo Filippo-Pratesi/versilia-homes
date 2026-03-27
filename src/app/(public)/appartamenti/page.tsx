@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: 'I Nostri Appartamenti',
-  description: 'Scopri i nostri 3 appartamenti a Viareggio: La Casina al Fresco, Seaside Apartment e Appartamento 3 camere a 500m dal mare.',
+  description: 'Scopri i nostri 3 appartamenti a Viareggio: Il Nido, La Pineta e Il Veliero. A 500m dal mare, prenotazione diretta senza commissioni.',
 };
 
 export const revalidate = 3600;
