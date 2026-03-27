@@ -11,19 +11,10 @@ interface PropertyCardProps {
   property: PropertyWithPhotos & { pricing_rules?: PricingRule[] };
 }
 
-function getDefaultPrice(pricingRules: PricingRule[] = []): number | null {
-  const defaultRule = pricingRules.find((r) => r.is_default);
-  if (defaultRule) return defaultRule.price_per_night;
-  if (pricingRules.length > 0) return pricingRules[0].price_per_night;
-  return null;
-}
-
 export function PropertyCard({ property }: PropertyCardProps) {
   const coverPhoto =
     property.property_photos.find((p) => p.is_cover) ??
     property.property_photos[0];
-
-  const defaultPrice = getDefaultPrice(property.pricing_rules);
 
   const isGuestFavorite =
     (property.reviews_count ?? 0) >= 5 && (property.rating ?? 0) >= 4.8;

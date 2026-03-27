@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   motion,
   useScroll,
@@ -72,11 +73,30 @@ export function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden public-hero-bg"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#2D3436]"
     >
+      {/* Background photo */}
+      <Image
+        src="/images/viareggio-hero.jpg"
+        alt="Spiaggia di Viareggio"
+        fill
+        priority
+        className="object-cover object-center"
+        sizes="100vw"
+      />
+
+      {/* Gradient overlay — keeps text readable */}
+      <div
+        className="absolute inset-0 z-[1]"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(250,250,248,0.82) 0%, rgba(232,220,200,0.70) 40%, rgba(224,239,243,0.65) 100%)",
+        }}
+      />
+
       {/* Parallax content wrapper */}
       <motion.div
-        className="relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-6 max-w-4xl mx-auto"
+        className="relative z-[2] flex flex-col items-center justify-center text-center px-4 sm:px-6 max-w-4xl mx-auto"
         style={{ y: yParallax, opacity: opacityFade }}
       >
         {/* Radial glow orbs */}
@@ -165,7 +185,7 @@ export function HeroSection() {
 
       {/* Scroll-down arrow */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[2]"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4 }}
