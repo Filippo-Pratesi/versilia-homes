@@ -114,20 +114,11 @@ export function PropertyCard({ property }: PropertyCardProps) {
             </span>
           </div>
 
-          {/* Price */}
+          {/* CTA */}
           <div className="pt-1 border-t border-[#E0D8CC]">
-            {defaultPrice !== null ? (
-              <p className="text-sm text-[#2D3436]">
-                <span className="text-lg font-semibold">
-                  €{defaultPrice.toFixed(0)}
-                </span>
-                <span className="text-[#636E72]"> / notte</span>
-              </p>
-            ) : (
-              <p className="text-sm text-[#636E72] italic">
-                Contattaci per il prezzo
-              </p>
-            )}
+            <p className="text-sm text-[#4A90A4] font-medium group-hover:underline underline-offset-2">
+              Scopri e prenota →
+            </p>
           </div>
         </div>
       </Link>
