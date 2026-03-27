@@ -67,7 +67,7 @@ export default function BookingRequestOwner({
         <Container style={styles.container}>
           {/* Header */}
           <Section style={styles.header}>
-            <Text style={styles.headerLogo}>Versilia Homes</Text>
+            <Text style={styles.headerLogo}>Viareggio Homes</Text>
             <Text style={styles.headerTagline}>Pannello Proprietario</Text>
           </Section>
 
@@ -169,11 +169,11 @@ export default function BookingRequestOwner({
           {/* Footer */}
           <Section style={styles.footer}>
             <Text style={styles.footerText}>
-              Versilia Homes — Via della Pineta, Viareggio (LU)
+              Viareggio Homes — Via della Pineta, Viareggio (LU)
             </Text>
             <Text style={styles.footerText}>
               Hai ricevuto questa email perché sei registrato come proprietario
-              su Versilia Homes.
+              su Viareggio Homes.
             </Text>
           </Section>
         </Container>

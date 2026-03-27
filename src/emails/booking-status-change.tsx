@@ -62,7 +62,7 @@ export default function BookingStatusChange({
               backgroundColor: isConfirmed ? '#C2714F' : '#8C7B6E',
             }}
           >
-            <Text style={styles.headerLogo}>Versilia Homes</Text>
+            <Text style={styles.headerLogo}>Viareggio Homes</Text>
             <Text style={styles.headerTagline}>
               {isConfirmed ? 'Prenotazione Confermata' : 'Aggiornamento Richiesta'}
             </Text>
@@ -93,7 +93,7 @@ export default function BookingStatusChange({
           {/* Footer */}
           <Section style={styles.footer}>
             <Text style={styles.footerText}>
-              Versilia Homes — Via della Pineta, Viareggio (LU)
+              Viareggio Homes — Via della Pineta, Viareggio (LU)
             </Text>
             <Text style={styles.footerText}>
               Hai ricevuto questa email in risposta alla tua richiesta di
@@ -231,7 +231,7 @@ function DeclinedContent({
           nelle settimane vicine.
         </Text>
         <Text style={styles.suggestionText}>
-          • Esplora le altre proprietà su Versilia Homes.
+          • Esplora le altre proprietà su Viareggio Homes.
         </Text>
         <Text style={styles.suggestionText}>
           • Contattaci direttamente per ricevere assistenza personalizzata.

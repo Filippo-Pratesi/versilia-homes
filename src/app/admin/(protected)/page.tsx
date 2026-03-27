@@ -126,7 +126,7 @@ export default async function AdminDashboard() {
           Dashboard
         </h1>
         <p className="text-muted-foreground mt-1">
-          Panoramica delle attività di Versilia Homes
+          Panoramica delle attività di Viareggio Homes
         </p>
       </div>
 

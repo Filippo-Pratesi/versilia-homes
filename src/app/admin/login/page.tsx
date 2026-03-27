@@ -48,7 +48,7 @@ export default function AdminLoginPage() {
           <div className="flex items-center justify-center gap-2 mb-4">
             <Waves className="w-6 h-6 text-[#4A90A4]" />
             <span className="font-display text-2xl font-semibold text-[#2D3436]">
-              Versilia Homes
+              Viareggio Homes
             </span>
           </div>
           <CardTitle className="text-xl text-[#2D3436] font-sans font-medium">

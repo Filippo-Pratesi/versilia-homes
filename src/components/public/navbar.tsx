@@ -39,7 +39,7 @@ export function Navbar() {
         <Link
           href="/"
           className="flex items-center gap-2 group"
-          aria-label="Versilia Homes – torna alla homepage"
+          aria-label="Viareggio Homes – torna alla homepage"
         >
           <Waves
             className="h-6 w-6 text-[#4A90A4] group-hover:scale-110 transition-transform"
@@ -49,7 +49,7 @@ export function Navbar() {
             className="font-display text-xl font-semibold text-[#2D3436] tracking-wide"
             style={{ fontFamily: "var(--font-cormorant)" }}
           >
-            Versilia Homes
+            Viareggio Homes
           </span>
         </Link>
 
@@ -105,7 +105,7 @@ export function Navbar() {
                     className="font-display text-lg font-semibold text-[#2D3436]"
                     style={{ fontFamily: "var(--font-cormorant)" }}
                   >
-                    Versilia Homes
+                    Viareggio Homes
                   </span>
                 </div>
                 {/* Mobile links */}

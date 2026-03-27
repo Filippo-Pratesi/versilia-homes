@@ -16,7 +16,7 @@ export function Footer() {
                 className="font-display text-lg font-semibold text-[#2D3436]"
                 style={{ fontFamily: "var(--font-cormorant)" }}
               >
-                Versilia Homes
+                Viareggio Homes
               </span>
             </div>
             <p className="text-sm text-[#636E72] leading-relaxed max-w-[220px]">
@@ -66,7 +66,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-10 pt-6 border-t border-[#E0D8CC] flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-xs text-[#636E72]">
-            &copy; {currentYear} Versilia Homes. Tutti i diritti riservati.
+            &copy; {currentYear} Viareggio Homes. Tutti i diritti riservati.
           </p>
           <p className="text-xs text-[#636E72] text-center sm:text-right">
             Struttura registrata ai sensi della normativa regionale sulla

@@ -97,7 +97,7 @@ export default function ChiSiamoPage() {
                     className="font-display text-xl text-[#2D3436] font-semibold"
                     style={{ fontFamily: "var(--font-cormorant)" }}
                   >
-                    Versilia Homes
+                    Viareggio Homes
                   </p>
                   <p className="text-xs text-[#636E72] uppercase tracking-widest">
                     Viareggio · Dal 2024

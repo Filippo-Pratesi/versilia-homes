@@ -70,7 +70,7 @@ export function AdminSidebar() {
         <Link href="/admin" className="flex items-center gap-2.5">
           <Waves className="w-5 h-5 text-[#4A90A4]" />
           <span className="font-display text-xl font-semibold text-[#2D3436]">
-            Versilia Homes
+            Viareggio Homes
           </span>
         </Link>
       </div>
