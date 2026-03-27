@@ -24,12 +24,6 @@ function roundToNearest5(n: number) {
   return Math.round(n / 5) * 5;
 }
 
-function getDefaultPrice(property: PropertyFull): number {
-  return Number(
-    property.pricing_rules.find((r) => r.is_default)?.price_per_night ?? 0
-  );
-}
-
 function getPriceForRange(
   property: PropertyFull,
   checkIn: Date,
@@ -159,8 +153,6 @@ export function BookingWidget({ property }: BookingWidgetProps) {
       ? getPriceForRange(property, range.from, range.to)
       : null;
 
-  const defaultPrice = getDefaultPrice(property);
-
   const fmt = (d: Date) => format(d, "dd/MM/yyyy");
   const fmtShort = (d: Date) => format(d, "d MMM", { locale: it });
 
@@ -187,14 +179,11 @@ export function BookingWidget({ property }: BookingWidgetProps) {
             </div>
           ) : (
             <div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-bold text-[#2D3436]">
-                  €{defaultPrice}
-                </span>
-                <span className="text-sm text-[#636E72]">/ notte</span>
-              </div>
-              <p className="text-xs text-[#4A90A4] mt-0.5">
-                Aggiungi le date per vedere il totale
+              <p className="text-base font-semibold text-[#2D3436]">
+                Seleziona le date
+              </p>
+              <p className="text-xs text-[#636E72] mt-0.5">
+                Il prezzo verrà calcolato in base al periodo scelto
               </p>
             </div>
           )}
