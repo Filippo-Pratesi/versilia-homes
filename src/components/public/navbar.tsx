@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/appartamenti", label: "Appartamenti" },
+  { href: "/viareggio", label: "La Zona" },
   { href: "/chi-siamo", label: "Chi Siamo" },
 ];
 
