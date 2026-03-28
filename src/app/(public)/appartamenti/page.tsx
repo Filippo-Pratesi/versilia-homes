@@ -88,17 +88,6 @@ function buildItemListSchema(
             "@type": "QuantitativeValue",
             maxValue: p.guests_max,
           },
-          ...(p.rating != null
-            ? {
-                aggregateRating: {
-                  "@type": "AggregateRating",
-                  ratingValue: p.rating,
-                  reviewCount: p.reviews_count ?? 1,
-                  bestRating: 5,
-                  worstRating: 1,
-                },
-              }
-            : {}),
         },
       };
     }),
