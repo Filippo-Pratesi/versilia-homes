@@ -13,20 +13,36 @@ export default function BlogPage() {
   return (
     <div className="bg-[#FAFAF8]">
       {/* ── Header ── */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#E8DCC8]/20 border-b border-[#E0D8CC] text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#4A90A4] mb-4">
-          Guida alla Versilia
-        </p>
-        <h1
-          className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#2D3436] leading-tight"
-          style={{ fontFamily: "var(--font-cormorant)" }}
-        >
-          Il Blog
-        </h1>
-        <p className="mt-5 text-lg text-[#636E72] max-w-2xl mx-auto leading-relaxed">
-          Consigli di viaggio, guide locali e tutto quello che devi sapere per
-          vivere al meglio la tua vacanza a Viareggio e nella Versilia.
-        </p>
+      <section className="relative py-20 sm:py-32 px-4 flex flex-col items-center justify-center text-center overflow-hidden bg-[#2D3436]">
+        <Image
+          src="/images/blog/blog-hero.jpg"
+          alt="Guida alla Versilia"
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "linear-gradient(to bottom, rgba(250,250,248,0.82) 0%, rgba(232,220,200,0.70) 40%, rgba(224,239,243,0.65) 100%)",
+          }}
+        />
+        <div className="relative z-[2] max-w-3xl mx-auto">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#4A90A4] mb-4">
+            Guida alla Versilia
+          </p>
+          <h1
+            className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#2D3436] leading-tight"
+            style={{ fontFamily: "var(--font-cormorant)" }}
+          >
+            Il Blog
+          </h1>
+          <p className="mt-5 text-lg text-[#636E72] max-w-2xl mx-auto leading-relaxed">
+            Consigli di viaggio, guide locali e tutto quello che devi sapere per
+            vivere al meglio la tua vacanza a Viareggio e nella Versilia.
+          </p>
+        </div>
       </section>
 
       {/* ── Articles grid ── */}
