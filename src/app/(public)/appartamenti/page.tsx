@@ -35,70 +35,8 @@ async function fetchProperties(): Promise<
   }
 }
 
-// Static address data keyed by slug, used to enrich ItemList schema
-const PROPERTY_ADDRESSES: Record<string, { street: string; lat: number; lng: number }> = {
-  "il-nido": { street: "Via Beato Angelico 2", lat: 43.88151, lng: 10.24376 },
-  "la-pineta": { street: "Via Montello 10", lat: 43.88276, lng: 10.24189 },
-  "il-veliero": { street: "Via Enrico Dandolo 29", lat: 43.88281, lng: 10.24295 },
-};
-
-function buildItemListSchema(
-  properties: (PropertyWithPhotos & { pricing_rules: PricingRule[] })[]
-) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "Appartamenti vacanza a Viareggio — Viareggio Homes",
-    description:
-      "I nostri tre appartamenti vacanza a Viareggio, Versilia: Il Nido, La Pineta, Il Veliero. Prenotazione diretta, senza commissioni.",
-    url: "https://viareggiohomes.it/appartamenti",
-    numberOfItems: properties.length,
-    itemListElement: properties.map((p, index) => {
-      const staticData = PROPERTY_ADDRESSES[p.slug];
-      const coverPhoto = p.property_photos.find((ph) => ph.is_cover) ?? p.property_photos[0];
-      return {
-        "@type": "ListItem",
-        position: index + 1,
-        item: {
-          "@type": "Apartment",
-          "@id": `https://viareggiohomes.it/appartamenti/${p.slug}`,
-          name: p.title,
-          description: p.subtitle ?? p.description,
-          url: `https://viareggiohomes.it/appartamenti/${p.slug}`,
-          ...(coverPhoto ? { image: coverPhoto.url } : {}),
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: staticData?.street ?? (p.address ?? undefined),
-            addressLocality: "Viareggio",
-            addressRegion: "Toscana",
-            addressCountry: "IT",
-            postalCode: "55049",
-          },
-          ...(staticData
-            ? {
-                geo: {
-                  "@type": "GeoCoordinates",
-                  latitude: staticData.lat,
-                  longitude: staticData.lng,
-                },
-              }
-            : {}),
-          numberOfBedrooms: p.bedrooms,
-          numberOfBathroomsTotal: p.bathrooms,
-          occupancy: {
-            "@type": "QuantitativeValue",
-            maxValue: p.guests_max,
-          },
-        },
-      };
-    }),
-  };
-}
-
 export default async function AppartamentiPage() {
   const properties = await fetchProperties();
-
-  const itemListSchema = buildItemListSchema(properties);
 
   const mapProperties: MapProperty[] = properties
     .filter((p) => p.latitude != null && p.longitude != null)
@@ -112,10 +50,6 @@ export default async function AppartamentiPage() {
 
   return (
     <div className="min-h-screen bg-[#FAFAF8]">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
-      />
       {/* Page header */}
       <section className="relative py-20 sm:py-32 px-4 flex flex-col items-center justify-center text-center overflow-hidden bg-[#2D3436]">
         <Image
