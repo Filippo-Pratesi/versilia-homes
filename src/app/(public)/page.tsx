@@ -110,13 +110,6 @@ const lodgingBusinessSchema = {
     { "@type": "LocationFeatureSpecification", name: "Parcheggio", value: true },
     { "@type": "LocationFeatureSpecification", name: "Vicino al mare", value: true },
   ],
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: 5,
-    reviewCount: 3,
-    bestRating: 5,
-    worstRating: 1,
-  },
 };
 
 export default async function HomePage() {
