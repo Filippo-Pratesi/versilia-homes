@@ -73,17 +73,6 @@ function buildApartmentSchema(property: PropertyFull) {
           })),
         }
       : {}),
-    ...(property.rating != null
-      ? {
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: property.rating,
-            reviewCount: property.reviews_count ?? 1,
-            bestRating: 5,
-            worstRating: 1,
-          },
-        }
-      : {}),
     containedInPlace: {
       "@type": "LodgingBusiness",
       "@id": "https://viareggiohomes.it/#lodging-business",
