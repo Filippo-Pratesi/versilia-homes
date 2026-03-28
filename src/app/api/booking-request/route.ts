@@ -175,7 +175,7 @@ export async function POST(request: NextRequest) {
 
   const owner = (property as { owners: { name: string; email: string; whatsapp_number: string | null } }).owners;
 
-  const adminUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001'}/admin`;
+  const adminUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://viareggiohomes.it'}/admin`;
 
   // Send owner email (non-fatal)
   try {
