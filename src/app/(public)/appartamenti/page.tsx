@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { PropertiesGrid } from "@/components/public/properties-grid";
 import { PropertiesMap, type MapProperty } from "@/components/public/properties-map-dynamic";
@@ -116,21 +117,38 @@ export default async function AppartamentiPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
       />
       {/* Page header */}
-      <div className="py-16 px-4 sm:px-6 lg:px-8 text-center bg-[#E8DCC8]/20 border-b border-[#E0D8CC]">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#4A90A4] mb-3">
-          Viareggio · Versilia
-        </p>
-        <h1
-          className="font-display text-4xl sm:text-5xl font-semibold text-[#2D3436]"
-          style={{ fontFamily: "var(--font-cormorant)" }}
-        >
-          I Nostri Appartamenti
-        </h1>
-        <p className="mt-4 text-[#636E72] max-w-md mx-auto">
-          Prenota direttamente con noi. Nessuna commissione, contatto diretto
-          con i proprietari.
-        </p>
-      </div>
+      <section className="relative py-20 sm:py-32 px-4 flex flex-col items-center justify-center text-center overflow-hidden bg-[#2D3436]">
+        <Image
+          src="/images/appartamenti-hero.jpg"
+          alt="Veduta aerea della spiaggia di Viareggio sul mare Tirreno"
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(250,250,248,0.80) 0%, rgba(232,220,200,0.68) 40%, rgba(224,239,243,0.62) 100%)",
+          }}
+        />
+        <div className="relative z-[2] max-w-3xl mx-auto">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#4A90A4] mb-3">
+            Viareggio · Versilia
+          </p>
+          <h1
+            className="font-display text-3xl sm:text-5xl font-semibold text-[#2D3436]"
+            style={{ fontFamily: "var(--font-cormorant)" }}
+          >
+            I Nostri Appartamenti
+          </h1>
+          <p className="mt-4 text-[#636E72] max-w-md mx-auto">
+            Prenota direttamente con noi. Nessuna commissione, contatto diretto
+            con i proprietari.
+          </p>
+        </div>
+      </section>
 
       <PropertiesGrid properties={properties} />
 
@@ -140,7 +158,7 @@ export default async function AppartamentiPage() {
           <div className="max-w-6xl mx-auto">
             <div className="mb-8 text-center">
               <h2
-                className="font-display text-4xl font-semibold text-[#2D3436] mb-2"
+                className="font-display text-3xl sm:text-4xl font-semibold text-[#2D3436] mb-2"
                 style={{ fontFamily: "var(--font-cormorant)" }}
               >
                 Dove Siamo

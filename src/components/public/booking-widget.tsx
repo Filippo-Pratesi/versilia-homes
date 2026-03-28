@@ -393,7 +393,7 @@ export function BookingWidget({ property }: BookingWidgetProps) {
       {/* ── Calendar popup ── */}
       {calendarOpen && (
         <div
-          className="absolute left-0 right-0 mt-2 bg-white rounded-2xl border border-[#E0D8CC] shadow-2xl z-50 p-4"
+          className="fixed inset-x-4 bottom-4 sm:absolute sm:inset-x-auto sm:left-0 sm:right-0 sm:bottom-auto mt-2 bg-white rounded-2xl border border-[#E0D8CC] shadow-2xl z-50 p-4 max-h-[85vh] overflow-y-auto"
           style={{ minWidth: "320px" }}
         >
           {/* Calendar header */}

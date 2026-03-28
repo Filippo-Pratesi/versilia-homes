@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Heart, Anchor, Sun } from "lucide-react";
 import Link from "next/link";
 import { ContactForm } from "@/components/public/contact-form";
@@ -34,20 +35,37 @@ export default function ChiSiamoPage() {
   return (
     <div className="bg-[#FAFAF8]">
       {/* Hero */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#E8DCC8]/20 border-b border-[#E0D8CC] text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#4A90A4] mb-4">
-          La nostra storia
-        </p>
-        <h1
-          className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#2D3436] leading-tight"
-          style={{ fontFamily: "var(--font-cormorant)" }}
-        >
-          Chi Siamo
-        </h1>
-        <p className="mt-5 text-lg text-[#636E72] max-w-xl mx-auto leading-relaxed">
-          Una famiglia di Viareggio con il mare nel cuore e la passione per
-          l&apos;accoglienza.
-        </p>
+      <section className="relative py-20 sm:py-32 px-4 flex flex-col items-center justify-center text-center overflow-hidden bg-[#2D3436]">
+        <Image
+          src="/images/chi-siamo-hero.jpg"
+          alt="Interno caldo e accogliente di un appartamento italiano"
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(250,250,248,0.80) 0%, rgba(232,220,200,0.68) 40%, rgba(224,239,243,0.62) 100%)",
+          }}
+        />
+        <div className="relative z-[2] max-w-3xl mx-auto">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#4A90A4] mb-4">
+            La nostra storia
+          </p>
+          <h1
+            className="font-display text-3xl sm:text-5xl lg:text-6xl font-semibold text-[#2D3436] leading-tight"
+            style={{ fontFamily: "var(--font-cormorant)" }}
+          >
+            Chi Siamo
+          </h1>
+          <p className="mt-5 text-lg text-[#636E72] max-w-xl mx-auto leading-relaxed">
+            Una famiglia di Viareggio con il mare nel cuore e la passione per
+            l&apos;accoglienza.
+          </p>
+        </div>
       </section>
 
       {/* Story section */}
@@ -165,7 +183,7 @@ export default function ChiSiamoPage() {
           </div>
 
           {/* Two-column layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-start">
             {/* Left — email form */}
             <div className="space-y-4">
               <h3
@@ -180,12 +198,6 @@ export default function ChiSiamoPage() {
               </p>
               <ContactForm />
             </div>
-
-            {/* Divider — visible only on desktop */}
-            <div className="hidden lg:block absolute left-1/2 top-0 h-full w-px bg-[#E8DCC8]" aria-hidden="true" />
-
-            {/* Mobile divider */}
-            <div className="lg:hidden my-10 border-t border-[#E8DCC8]" aria-hidden="true" />
 
             {/* Right — WhatsApp */}
             <div className="space-y-4">

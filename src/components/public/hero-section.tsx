@@ -132,7 +132,7 @@ export function HeroSection() {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="font-display text-5xl sm:text-6xl lg:text-7xl font-semibold text-[#2D3436] leading-tight tracking-tight mb-6"
+          className="font-display text-3xl sm:text-5xl lg:text-7xl font-semibold text-[#2D3436] leading-tight tracking-tight mb-6"
           style={{ fontFamily: "var(--font-cormorant)" }}
         >
           {words.map((word, i) => (
@@ -170,13 +170,13 @@ export function HeroSection() {
         >
           <Link
             href="/appartamenti"
-            className="inline-flex items-center justify-center bg-[#4A90A4] hover:bg-[#3A7A8E] text-white rounded-full px-8 py-4 text-base font-medium shadow-lg shadow-[#4A90A4]/20 transition-all duration-300 hover:shadow-xl hover:shadow-[#4A90A4]/30 hover:-translate-y-0.5"
+            className="inline-flex items-center justify-center w-full sm:w-auto bg-[#4A90A4] hover:bg-[#3A7A8E] text-white rounded-full px-8 py-4 text-base font-medium shadow-lg shadow-[#4A90A4]/20 transition-all duration-300 hover:shadow-xl hover:shadow-[#4A90A4]/30 hover:-translate-y-0.5"
           >
             Scopri gli appartamenti
           </Link>
           <Link
             href="/chi-siamo"
-            className="inline-flex items-center justify-center border border-[#2D3436]/20 text-[#2D3436] hover:bg-[#2D3436]/5 rounded-full px-8 py-4 text-base font-medium transition-all duration-300"
+            className="inline-flex items-center justify-center w-full sm:w-auto border border-[#2D3436]/20 text-[#2D3436] hover:bg-[#2D3436]/5 rounded-full px-8 py-4 text-base font-medium transition-all duration-300"
           >
             Contattaci
           </Link>

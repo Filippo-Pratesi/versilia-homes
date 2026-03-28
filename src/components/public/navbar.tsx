@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/appartamenti", label: "Appartamenti" },
   { href: "/viareggio", label: "La Zona" },
+  { href: "/blog", label: "Blog" },
   { href: "/chi-siamo", label: "Chi Siamo" },
 ];
 
@@ -80,7 +81,7 @@ export function Navbar() {
               render={
                 <button
                   aria-label="Apri menu"
-                  className="p-2 text-[#2D3436] hover:text-[#4A90A4] transition-colors"
+                  className="flex items-center justify-center min-h-[44px] min-w-[44px] text-[#2D3436] hover:text-[#4A90A4] transition-colors"
                 />
               }
             >
