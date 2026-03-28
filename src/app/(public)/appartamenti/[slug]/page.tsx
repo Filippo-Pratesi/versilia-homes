@@ -62,7 +62,7 @@ function buildApartmentSchema(property: PropertyFull) {
     occupancy: {
       "@type": "QuantitativeValue",
       maxValue: property.guests_max,
-      unitText: "ospiti",
+      unitCode: "C62",
     },
     ...(property.amenities && property.amenities.length > 0
       ? {
@@ -93,8 +93,6 @@ function buildApartmentSchema(property: PropertyFull) {
     ...(property.airbnb_url
       ? { sameAs: [property.airbnb_url] }
       : {}),
-    inLanguage: "it",
-    tourBookingPage: `https://viareggiohomes.it/appartamenti/${property.slug}`,
   };
 }
 

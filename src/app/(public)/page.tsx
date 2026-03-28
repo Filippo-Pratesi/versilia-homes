@@ -110,11 +110,6 @@ const lodgingBusinessSchema = {
     { "@type": "LocationFeatureSpecification", name: "Parcheggio", value: true },
     { "@type": "LocationFeatureSpecification", name: "Vicino al mare", value: true },
   ],
-  inLanguage: "it",
-  areaServed: {
-    "@type": "Place",
-    name: "Versilia, Toscana, Italia",
-  },
 };
 
 export default async function HomePage() {
