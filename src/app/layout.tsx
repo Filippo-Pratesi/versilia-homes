@@ -18,20 +18,26 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://versiliahomes.it'),
+  metadataBase: new URL('https://viareggiohomes.it'),
   title: {
-    default: 'Vacanze in Versilia — Appartamenti a Viareggio',
+    default: 'Appartamenti Vacanza a Viareggio — Viareggio Homes',
     template: '%s | Viareggio Homes',
   },
-  description: 'Prenota direttamente i tuoi appartamenti vacanza a Viareggio, Versilia. A pochi passi dal mare. Contatto diretto con i proprietari, senza commissioni Airbnb.',
-  keywords: ['appartamenti viareggio', 'vacanze versilia', 'affitto mare viareggio', 'versilia homes', 'prenotazione diretta'],
+  description: 'Appartamenti vacanza a Viareggio sul mare della Versilia. Prenotazione diretta senza commissioni: Il Nido, La Pineta, Il Veliero.',
+  keywords: [
+    'appartamento vacanza Viareggio',
+    'mare Versilia',
+    'prenotazione diretta',
+    'affitto vacanze Viareggio',
+    'appartamenti Versilia',
+  ],
   authors: [{ name: 'Viareggio Homes' }],
   openGraph: {
     type: 'website',
     locale: 'it_IT',
     siteName: 'Viareggio Homes',
-    title: 'Vacanze in Versilia — Appartamenti a Viareggio',
-    description: 'Appartamenti vacanza a Viareggio, a pochi passi dal mare della Versilia.',
+    title: 'Appartamenti Vacanza a Viareggio — Viareggio Homes',
+    description: 'Appartamenti vacanza a Viareggio sul mare della Versilia. Prenotazione diretta senza commissioni.',
   },
   twitter: { card: 'summary_large_image' },
   robots: { index: true, follow: true },

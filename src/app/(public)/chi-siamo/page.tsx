@@ -5,8 +5,8 @@ import { ContactForm } from "@/components/public/contact-form";
 import { WhatsAppSelector } from "@/components/public/whatsapp-selector";
 
 export const metadata: Metadata = {
-  title: 'Chi Siamo',
-  description: 'Scopri chi siamo: una famiglia viareggina che condivide i propri appartamenti vacanza sul mare della Versilia.',
+  title: 'Chi Siamo — Viareggio Homes',
+  description: 'Siamo una famiglia di Viareggio che affitta i propri appartamenti vacanza sul mare della Versilia con prenotazione diretta e ospitalità autentica.',
 };
 
 const values = [

@@ -1,26 +1,50 @@
 import { MetadataRoute } from 'next'
-import { createAdminClient } from '@/lib/supabase/admin'
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://versiliahomes.it'
-
-  const admin = createAdminClient()
-  const { data: properties } = await admin
-    .from('properties')
-    .select('slug, updated_at')
-    .eq('is_active', true)
-
-  const propertyUrls = (properties || []).map((p) => ({
-    url: `${baseUrl}/appartamenti/${p.slug}`,
-    lastModified: p.updated_at ? new Date(p.updated_at) : new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-  }))
+export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = 'https://viareggiohomes.it'
 
   return [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },
-    { url: `${baseUrl}/appartamenti`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
-    { url: `${baseUrl}/chi-siamo`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
-    ...propertyUrls,
+    {
+      url: baseUrl,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/appartamenti`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/appartamenti/il-nido`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/appartamenti/la-pineta`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/appartamenti/il-veliero`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/viareggio`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/chi-siamo`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.5,
+    },
   ]
 }
